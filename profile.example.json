@@ -9,7 +9,7 @@
     "github": "https://github.com/exemplo-dev",
     "portfolio": "https://github.com/exemplo-dev"
   },
-  "summary": "Desenvolvedor de Software focado em backend, mobile e desenvolvimento de sistemas orientados a APIs RESTful. Praticante de engenharia de software assistida por IA para acelerar entregas com rigor técnico e cobertura de testes. Sólida fundamentação em Java (Spring Boot), Python, Flutter e modelagem SQL.",
+  "summary": "Desenvolvedor de Software focado em backend, mobile e desenvolvimento de sistemas orientados a APIs RESTful. Praticante de engenharia de software assistida por IA para acelerar entregas com rigor técnico e cobertura de testes. Experiência na condução de PoCs, prototipagem ágil e benchmarking de métricas. Sólida fundamentação em Java (Spring Boot), Python, Flutter, modelagem SQL e NoSQL.",
   "target_roles": [
     "Junior Software Engineer",
     "Junior Backend Developer",
@@ -39,76 +39,81 @@
     "databases": [
       "PostgreSQL",
       "MySQL",
+      "MongoDB",
+      "Firebase Firestore",
       "SQLite",
       "Redis"
     ],
     "tools": [
-      "Git",
+      "Git & GitHub Version Control",
       "GitHub Actions",
       "Docker",
       "Linux",
       "Postman",
-      "RESTful APIs",
+      "RESTful API Consumption & Design",
       "PowerShell"
     ],
     "concepts": [
       "Object-Oriented Programming (OOP)",
       "Clean Architecture",
-      "RESTful Architecture",
+      "RESTful Architecture & API Consumption",
+      "Proof of Concept (PoC) Execution",
+      "Performance Benchmarking & Metrics Collection",
+      "Standard Operating Procedures (SOPs)",
       "Automated Testing",
       "AI-Assisted Software Engineering",
       "CI/CD"
     ]
   },
-  "portfolio_projects": [
+  "projects": [
     {
-      "name": "E-Commerce Retail API",
-      "description": "API RESTful de alta performance para catálogo de produtos, controle de pedidos e conciliação em tempo real de estoque.",
-      "tech_stack": ["Java", "Spring Boot", "React", "PostgreSQL"],
-      "highlights": "Implementou autenticação JWT, paginação de consultas e documentação OpenAPI com cobertura de testes unitários.",
+      "name": "Plataforma de E-Commerce & Controle de Estoque",
+      "tech_stack": ["Java", "Spring Boot", "React", "PostgreSQL", "REST API", "PoC"],
+      "description": "Sistema full-stack com catálogo de produtos, conciliação em tempo real de pedidos e documentação interativa Swagger. Executou PoC de integração e otimizou queries SQL com indexação e medição de latência.",
       "url": "https://github.com/exemplo-dev/ecommerce-backend"
     },
     {
-      "name": "HealthTracker Mobile",
-      "description": "Aplicativo mobile multiplataforma para acompanhamento de rotinas de saúde e gestão de medicamentos com alertas programados.",
-      "tech_stack": ["Flutter", "Dart", "SQLite", "Clean Architecture"],
-      "highlights": "Arquitetura limpa em camadas (Data, Domain, Presentation) com persistência local e interface reativa.",
+      "name": "App Mobile de Gestão de Rotinas e Saúde",
+      "tech_stack": ["Flutter", "Dart", "Firebase NoSQL", "REST API"],
+      "description": "Aplicativo multiplataforma com persistência NoSQL (Firestore), sincronização em tempo real e gerência de estado reativa com Clean Architecture.",
       "url": "https://github.com/exemplo-dev/health-tracker"
     },
     {
-      "name": "JobHunter AI",
-      "description": "Motor autônomo em Python para rastreamento de vagas remotas, cálculo de compatibilidade e autofill de formulários ATS.",
-      "tech_stack": ["Python", "Playwright", "REST APIs"],
-      "highlights": "Varredura contínua de APIs públicas de vagas e preenchimento supervisionado de formulários com navegador headless/visual.",
+      "name": "JobHunter AI — Engine Autônomo de Vagas & Benchmarking",
+      "tech_stack": ["Python", "Playwright", "APIs REST", "Benchmarking"],
+      "description": "Automação em Python para monitorar feeds e APIs de vagas, calculando compatibilidade algorítmica e coletando métricas de taxa de acerto em formulários.",
       "url": "https://github.com/exemplo-dev/job-hunter-ai"
+    }
+  ],
+  "experience": [
+    {
+      "role": "Estagiário de Desenvolvimento de Software & Suporte Técnico",
+      "company": "TechCorp Soluções Tecnológicas",
+      "period": "01/2025 – Presente",
+      "highlights": [
+        "Suporte a sistemas ERP e servidores Linux, criando scripts em Python para automação de rotinas.",
+        "Elaborou Procedimentos Operacionais Padrão (POPs) documentados para contingência de servidores e incidentes.",
+        "Coletou métricas de diagnóstico e performance de infraestrutura."
+      ]
+    },
+    {
+      "role": "Assistente Operacional de TI (Treinamento & Suporte Local)",
+      "company": "Varejo Express Logística",
+      "period": "06/2024 – 12/2024",
+      "highlights": [
+        "Apoio na manutenção preventiva e suporte N1 a terminais PDV, periféricos e redes locais."
+      ]
     }
   ],
   "education": [
     {
       "degree": "Tecnólogo em Análise e Desenvolvimento de Sistemas",
       "institution": "Faculdade de Tecnologia",
-      "period": "2024 - 2026 (Em andamento)"
+      "period": "2024 – 2026 (Previsão)"
     }
   ],
-  "experience": [
-    {
-      "company": "TechCorp Soluções Tecnológicas",
-      "role": "Estagiário de Desenvolvimento de Software & Suporte",
-      "period": "01/2025 - Presente",
-      "bullets": [
-        "Suporte a sistemas de gestão empresarial (ERP), diagnóstico de logs e consultas SQL.",
-        "Desenvolvimento de scripts de automação em Python para cargas e relatórios operacionais."
-      ]
-    }
-  ],
-  "salary_expectation": {
-    "brl_clt_monthly": 3500,
-    "brl_pj_monthly": 4500,
-    "usd_hourly": 25,
-    "usd_monthly_contract": 3500
-  },
   "languages": [
-    { "language": "Português", "level": "Nativo" },
-    { "language": "Inglês", "level": "Avançado / Fluente" }
+    {"language": "Português", "level": "Nativo"},
+    {"language": "Inglês", "level": "Avançado"}
   ]
 }

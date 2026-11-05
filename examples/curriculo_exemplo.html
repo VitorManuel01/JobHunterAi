@@ -4,51 +4,52 @@
 <meta charset="UTF-8">
 <title>Lucas Silva - Currículo Exemplo</title>
 <style>
-  @page { margin: 8mm 12mm 8mm 12mm; size: A4; }
+  @page { margin: 6mm 10mm 6mm 10mm; size: A4; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    color: #1a1a1a;
-    line-height: 1.25;
-    font-size: 9.2pt;
+    color: #0f172a;
+    line-height: 1.22;
+    font-size: 8.8pt;
     margin: 0;
     padding: 0;
   }
   h1 {
-    font-size: 17pt;
+    font-size: 16pt;
     font-weight: 700;
-    margin: 0 0 3px 0;
+    margin: 0 0 2px 0;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     color: #0f172a;
   }
   .headline {
-    font-size: 10.5pt;
+    font-size: 10pt;
     font-weight: 600;
-    color: #2563eb;
-    margin-bottom: 5px;
+    color: #1d4ed8;
+    margin-bottom: 4px;
   }
   .contact-info {
-    font-size: 9pt;
+    font-size: 8.8pt;
     color: #475569;
-    margin-bottom: 10px;
+    margin-bottom: 7px;
   }
   .contact-info a {
-    color: #2563eb;
+    color: #1d4ed8;
     text-decoration: none;
+    font-weight: 500;
   }
   h2 {
-    font-size: 10pt;
+    font-size: 9.5pt;
     font-weight: 700;
     text-transform: uppercase;
     border-bottom: 1px solid #cbd5e1;
     padding-bottom: 2px;
-    margin: 7px 0 3px 0;
+    margin: 6px 0 3px 0;
     color: #0f172a;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
   }
-  p { margin: 0 0 5px 0; }
+  p { margin: 0 0 4px 0; }
   ul {
-    margin: 3px 0 6px 16px;
+    margin: 2px 0 4px 15px;
     padding: 0;
   }
   li { margin-bottom: 2px; }
@@ -57,22 +58,26 @@
     justify-content: space-between;
     font-weight: 700;
     color: #0f172a;
-    font-size: 9.5pt;
+    font-size: 9pt;
   }
   .item-sub {
     display: flex;
     justify-content: space-between;
     font-style: italic;
     color: #475569;
-    font-size: 9pt;
-    margin-bottom: 3px;
+    font-size: 8.5pt;
+    margin-bottom: 2px;
   }
   .skill-group {
-    margin-bottom: 3px;
-    font-size: 9.5pt;
+    margin-bottom: 2.5px;
+    font-size: 8.8pt;
   }
   .skill-group strong {
     color: #0f172a;
+  }
+  a {
+    color: #1d4ed8;
+    text-decoration: none;
   }
 </style>
 </head>
@@ -88,44 +93,47 @@
 
   <h2>Resumo Profissional</h2>
   <p>
-    Desenvolvedor de Software com foco em backend, mobile e desenvolvimento de sistemas orientados a microsserviços e APIs RESTful. Praticante ativo de <strong>engenharia de software assistida por IA</strong> para aceleração de entregas com rigor técnico, controle de contexto e cobertura contínua de testes. Sólida fundamentação em <strong>Java (POO, Spring Boot), Python, Flutter e modelagem SQL</strong>, com experiência prática em suporte a sistemas corporativos, resolução de incidentes e integração contínua.
+    Desenvolvedor de Software com perfil analítico, alta velocidade de entrega e pesquisa ativa em <strong>tecnologias emergentes</strong> (Engenharia de Software com IA e automação). Experiência prática na execução de <strong>Provas de Conceito (PoCs)</strong>, prototipagem ágil, configuração de ambientes de desenvolvimento e <strong>coleta de métricas/benchmarking de performance</strong>. Sólida base em <strong>Java (POO, Spring Boot), Python, Flutter e SQL</strong>, com domínio em <strong>controle de versão com Git/GitHub</strong>, desenvolvimento e <strong>consumo de APIs RESTful</strong>, bancos relacionais e NoSQL, e elaboração de documentações e procedimentos técnicos (POPs). Inglês avançado.
   </p>
 
   <h2>Habilidades Técnicas</h2>
-  <div class="skill-group"><strong>Linguagens & Frameworks:</strong> Java (Spring Boot, Hibernate, Maven), Python (FastAPI, Pandas), Dart/Flutter, JavaScript, SQL (PostgreSQL, MySQL)</div>
-  <div class="skill-group"><strong>Desenvolvimento com IA:</strong> Workflows de Engenharia Assistida por IA, Validação Automatizada de Código, Modelos de Linguagem para Testes e Refatoração</div>
-  <div class="skill-group"><strong>Ferramentas & DevOps:</strong> Git, GitHub Actions, Docker, Linux, APIs RESTful, Postman, CI/CD, Automação de Processos</div>
-  <div class="skill-group"><strong>Práticas de Engenharia:</strong> Programação Orientada a Objetos (POO), Arquitetura Limpa, Testes Unitários, Resolução de Falhas N1/N2</div>
+  <div class="skill-group"><strong>Engenharia de Software com IA & Tecnologias Emergentes:</strong> Workflows de Engenharia Assistida por IA, Validação Automatizada de Código, Avaliação de LLMs, Prototipagem Ágil & Execução de PoCs.</div>
+  <div class="skill-group"><strong>Linguagens & Frameworks:</strong> Java (Spring Boot, Hibernate, Maven), Python (FastAPI, Pandas), Dart/Flutter, JavaScript, TypeScript, SQL, React.</div>
+  <div class="skill-group"><strong>Controle de Versão & APIs:</strong> Git & GitHub (Branching, Pull Requests, Code Reviews, Git Worktrees), Desenvolvimento e Consumo de APIs RESTful (JSON, HTTP methods, Axios/Fetch, tratamento de erros).</div>
+  <div class="skill-group"><strong>Bancos de Dados:</strong> Relacionais (PostgreSQL, MySQL, modelagem e otimização de queries) e NoSQL (MongoDB, Firebase Firestore).</div>
+  <div class="skill-group"><strong>Infraestrutura, Qualidade & Métricas:</strong> Automação via Scripts (PowerShell/Python/Bash), Profiling de Performance & Coleta de Métricas, Docker, Testes Unitários, Elaboração de POPs/Documentação Técnica, Suporte N1/N2.</div>
 
   <h2>Projetos em Destaque</h2>
 
   <div class="item-header">
     <span>Plataforma de E-Commerce & Controle de Estoque</span>
-    <span>Java, Spring Boot, React, PostgreSQL</span>
+    <span>Java, Spring Boot, React, PostgreSQL, API REST</span>
   </div>
   <ul>
-    <li>Desenvolveu API RESTful para catálogo de produtos, controle de pedidos e conciliação em tempo real de estoque varejista.</li>
-    <li>Implementou autenticação segura via JWT, paginação eficiente de consultas e documentação interativa via Swagger/OpenAPI.</li>
+    <li>Desenvolveu API RESTful para catálogo de produtos e controle de pedidos, executando PoC inicial de integração entre serviços.</li>
+    <li>Projetou e consumiu endpoints RESTful com serialização JSON, autenticação JWT e documentação interativa via Swagger.</li>
+    <li>Otimizou consultas SQL com indexação e medição de latência sob carga, reduzindo tempo de resposta médio das requisições.</li>
     <li>Código-Fonte: <a href="https://github.com/exemplo-dev/ecommerce-backend">github.com/exemplo-dev/ecommerce-backend</a></li>
   </ul>
 
   <div class="item-header">
     <span>App Mobile de Gestão de Rotinas e Saúde</span>
-    <span>Flutter, Dart, SQLite, Clean Architecture</span>
+    <span>Flutter, Dart, Firebase NoSQL, REST API</span>
   </div>
   <ul>
-    <li>Construiu aplicativo multiplataforma (Android/iOS) com persistência local de dados, notificações agendadas e interface reativa.</li>
-    <li>Implementou arquitetura em camadas (Data, Domain, Presentation) garantindo modularidade e alta testabilidade de regras de negócio.</li>
+    <li>Construiu aplicativo mobile multiplataforma (Android/iOS) com persistência NoSQL (Firebase Firestore) e sincronização em tempo real.</li>
+    <li>Implementou consumo de APIs RESTful de parceiros e gerência de estado reativa orientada a Clean Architecture.</li>
+    <li>Gerenciou controle de versão colaborativo via Git/GitHub com feature branches, pull requests e testes automatizados.</li>
     <li>Código-Fonte: <a href="https://github.com/exemplo-dev/health-tracker">github.com/exemplo-dev/health-tracker</a></li>
   </ul>
 
   <div class="item-header">
-    <span>JobHunter AI — Engine Autônomo de Vagas & Candidaturas</span>
-    <span>Python, Playwright, APIs REST</span>
+    <span>JobHunter AI — Engine Autônomo de Vagas & Benchmarking</span>
+    <span>Python, Playwright, APIs REST, PoC</span>
   </div>
   <ul>
-    <li>Projetou motor automatizado em Python que monitora feeds públicos de vagas remotas e calcula índice de compatibilidade algorítmica.</li>
-    <li>Automatizou o preenchimento supervisionado de formulários ATS e geração de cartas de apresentação sob medida.</li>
+    <li>Projetou motor em Python que consome APIs e feeds públicos de vagas remotas, calculando compatibilidade algorítmica.</li>
+    <li>Conduziu testes de benchmarking e coleta de métricas de taxa de acerto em formulários ATS com relatórios automatizados.</li>
     <li>Código-Fonte: <a href="https://github.com/exemplo-dev/job-hunter-ai">github.com/exemplo-dev/job-hunter-ai</a></li>
   </ul>
 
@@ -140,8 +148,9 @@
     <span>São Paulo, SP</span>
   </div>
   <ul>
-    <li>Atuação no suporte a sistemas de gestão empresarial (ERP), análise de logs de aplicação em Linux e otimização de consultas SQL.</li>
-    <li>Desenvolvimento de scripts em Python para automação de rotinas de carga de dados e integração de relatórios operacionais.</li>
+    <li>Atuação no suporte a sistemas ERP e servidores Linux, desenvolvendo scripts em Python para automação de rotinas de carga de dados.</li>
+    <li>Elaborou Procedimentos Operacionais Padrão (POPs) documentados para contingência de sistemas e resolução de incidentes.</li>
+    <li>Realizou testes de diagnóstico e coleta de métricas de performance e disponibilidade de serviços.</li>
   </ul>
 
   <div class="item-header">
