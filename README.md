@@ -23,10 +23,9 @@ JobHunterAi/
 ├── matcher.py                  # Scoring & relevance algorithm (0–100%)
 ├── generator.py                # Cover letter & ATS answer generator
 ├── autofill.py                 # Playwright browser form auto-filler
-├── email_sender.py             # SMTP & direct webmail email dispatcher
+├── email_sender.py             # 1-click Webmail & application draft generator
 ├── main.py                     # CLI entrypoint
 ├── profile.example.json        # Template candidate profile (copy to profile.json)
-├── .env.example                # Template environment variables
 ├── requirements.txt            # Python dependencies
 ├── run_dashboard.bat           # 1-click Windows launcher
 └── examples/                   # Sample ATS-optimized Resumes (PT & EN)
@@ -62,11 +61,6 @@ playwright install chromium
 Copy the example profile and personalize it with your skills, links, and portfolio:
 ```bash
 cp profile.example.json profile.json
-```
-
-*(Optional) Configure SMTP settings for 1-click email applications:*
-```bash
-cp .env.example .env
 ```
 
 ---
@@ -137,7 +131,7 @@ This repository bundles two reference 1-page ATS-optimized resumes in `examples/
 
 Your real data stays local:
 - `profile.json`, `.env`, and private PDF resumes are strictly excluded via `.gitignore`.
-- Only sanitized example templates (`profile.example.json`, `.env.example`, and `examples/`) are tracked in version control.
+- Only sanitized example templates (`profile.example.json` and `examples/`) are tracked in version control.
 
 ---
 

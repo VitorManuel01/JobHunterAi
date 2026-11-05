@@ -22,7 +22,7 @@ from fetcher import fetch_all_jobs, CACHE_FILE
 from matcher import rank_jobs, load_profile
 from generator import generate_cover_letter, generate_ats_answers
 from autofill import auto_fill_job_application
-from email_sender import generate_email_application, send_email_smtp
+from email_sender import generate_email_application
 
 APP_DIR = os.path.dirname(__file__)
 APPLICATIONS_DIR = os.path.join(APP_DIR, "applications")
@@ -192,16 +192,10 @@ def cmd_email(args):
         f.write(f"```\n{draft['body_text']}\n```\n")
 
     print(f"[+] Saved email draft to: {out_file}")
-
-    if args.send:
-        print("\n[*] Sending via SMTP...")
-        res = send_email_smtp(draft["to"], draft["subject"], draft["body_text"], draft["body_html"], draft["attachments"])
-        if res["status"] == "success":
-            print(f"[+] {res['message']}")
-        else:
-            print(f"[!] {res['message']}")
-    else:
-        print(f"\n[Tip] To dispatch directly via SMTP, run: python main.py email {args.job_id} --send")
+    print(f"\n[🔗 1-Click Compose Links]")
+    print(f"• Outlook Web: {draft['outlook_web_url']}")
+    print(f"• Gmail Web:   {draft['gmail_web_url']}")
+    print(f"• Mailto Link: {draft['mailto_url']}")
 
 def cmd_report(args):
     print_header()
@@ -298,9 +292,8 @@ def main():
     p_autofill.add_argument("target", type=str, help="Job ID (e.g. remotive_2091158) or a direct URL")
 
     # Email command (Direct email application)
-    p_email = subparsers.add_parser("email", help="Generate or send an email application with attached resume.pdf")
+    p_email = subparsers.add_parser("email", help="Generate an email application draft with 1-click webmail links")
     p_email.add_argument("job_id", type=str, help="Job ID to apply by email")
-    p_email.add_argument("--send", action="store_true", help="Send email directly via SMTP (requires EMAIL_PASSWORD in .env)")
 
     args = parser.parse_args()
 

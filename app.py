@@ -14,7 +14,7 @@ from fetcher import fetch_all_jobs
 from matcher import rank_jobs, analyze_job, load_profile
 from generator import generate_cover_letter, generate_ats_answers
 from autofill import auto_fill_job_application
-from email_sender import generate_email_application, send_email_smtp
+from email_sender import generate_email_application
 
 APP_DIR = os.path.dirname(__file__)
 app = Flask(__name__, template_folder=os.path.join(APP_DIR, "templates"))
@@ -138,23 +138,6 @@ def get_job_email_draft(job_id):
     match_info = analyze_job(raw_job, profile)
     email_draft = generate_email_application(match_info, raw_job)
     return jsonify(email_draft)
-
-@app.route("/api/jobs/<job_id>/email/send", methods=["POST"])
-def send_job_email(job_id):
-    all_jobs = fetch_all_jobs(force_refresh=False)
-    raw_job = next((j for j in all_jobs if j["id"] == job_id), None)
-    if not raw_job:
-        return jsonify({"error": "Job not found"}), 404
-
-    profile = load_profile()
-    match_info = analyze_job(raw_job, profile)
-    draft = generate_email_application(match_info, raw_job)
-
-    if not draft["to"]:
-        return jsonify({"status": "error", "message": "Nenhum e-mail de aplicação encontrado para esta vaga."}), 400
-
-    result = send_email_smtp(draft["to"], draft["subject"], draft["body_text"], draft["body_html"], draft["attachments"])
-    return jsonify(result)
 
 def start_server(port=5000, open_browser=True):
     if open_browser:

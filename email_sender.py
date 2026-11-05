@@ -1,36 +1,17 @@
 """
 Email Application Automation Module
 Handles:
-1. Drafting personalized email applications with subject, body, and attachments (resume.pdf).
-2. Direct SMTP delivery (Hotmail/Outlook, Gmail, or custom SMTP).
-3. Fallback Mailto launcher for 1-click webmail/client drafting.
+1. Drafting personalized email applications with subject, body, and attachment paths.
+2. Generating 1-click Webmail compose deep-links (Outlook Web, Gmail, and mailto:).
 """
 
 import os
-import smtplib
 import urllib.parse
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.mime.base import MIMEBase
-from email import encoders
 from typing import Dict, Any, List, Optional
 
 from matcher import load_profile
 
 APP_DIR = os.path.dirname(__file__)
-ENV_FILE = os.path.join(APP_DIR, ".env")
-
-def load_env() -> Dict[str, str]:
-    """Loads environment variables from .env if present."""
-    config = {}
-    if os.path.exists(ENV_FILE):
-        with open(ENV_FILE, "r", encoding="utf-8") as f:
-            for line in f:
-                line = line.strip()
-                if line and not line.startswith("#") and "=" in line:
-                    k, v = line.split("=", 1)
-                    config[k.strip()] = v.strip().strip("'\"")
-    return config
 
 def is_brazilian_job(job_match: Dict[str, Any], raw_job: Dict[str, Any]) -> bool:
     """Detects whether a job is based in Brazil or the Brazilian tech market."""
@@ -57,16 +38,14 @@ def is_brazilian_job(job_match: Dict[str, Any], raw_job: Dict[str, Any]) -> bool
 
 def generate_email_application(job_match: Dict[str, Any], raw_job: Dict[str, Any]) -> Dict[str, Any]:
     """
-    Generates a high-converting cold email application for a job.
-    Routes language and resume attachment automatically:
-    - Brazilian jobs: Portuguese email + attaches curriculo.pdf
-    - International jobs: English email + attaches resume.pdf
+    Generates a tailored cold email application for a job with direct webmail compose URLs.
     """
     profile = load_profile()
-    recipient_email = raw_job.get("apply_email", "")
-    proj = job_match.get("recommended_project", profile["portfolio_projects"][0])
     is_brazil = is_brazilian_job(job_match, raw_job)
-
+    
+    recipient_email = job_match.get("apply_email") or raw_job.get("apply_email") or "recrutamento@empresa.com"
+    proj = job_match.get("recommended_project") or profile["portfolio_projects"][0]
+    
     attachments = []
     
     if is_brazil:
@@ -240,81 +219,6 @@ GitHub: <a href="{profile['contact']['github']}">{profile['contact']['github']}<
         "gmail_web_url": gmail_web_url
     }
 
-def send_email_smtp(to_email: str, subject: str, body_text: str, body_html: str, attachment_paths: List[str]) -> Dict[str, Any]:
-    """
-    Sends email via SMTP (Hotmail/Outlook, Gmail, etc.) using credentials from .env.
-    """
-    env = load_env()
-    profile = load_profile()
-    
-    sender_email = env.get("SMTP_USER") or profile["contact"]["email"]
-    sender_password = env.get("SMTP_PASSWORD") or env.get("EMAIL_PASSWORD")
-    smtp_host = env.get("SMTP_HOST", "smtp.office365.com")
-    smtp_port = int(env.get("SMTP_PORT", 587))
-
-    if not sender_password:
-        return {
-            "status": "needs_config",
-            "message": "Configuração SMTP necessária para envio 100% autônomo. Configure EMAIL_PASSWORD no arquivo .env."
-        }
-
-    try:
-        msg = MIMEMultipart("mixed")
-        msg["From"] = f"{profile['name']} <{sender_email}>"
-        msg["To"] = to_email
-        msg["Subject"] = subject
-
-        # Create alternative part for plain text + html
-        alt_part = MIMEMultipart("alternative")
-        alt_part.attach(MIMEText(body_text, "plain", "utf-8"))
-        if body_html:
-            alt_part.attach(MIMEText(body_html, "html", "utf-8"))
-        msg.attach(alt_part)
-
-        # Attach PDF files
-        for path in attachment_paths:
-            if os.path.exists(path):
-                filename = os.path.basename(path)
-                with open(path, "rb") as f:
-                    part = MIMEBase("application", "octet-stream")
-                    part.set_payload(f.read())
-                encoders.encode_base64(part)
-                part.add_header("Content-Disposition", f"attachment; filename=\"{filename}\"")
-                msg.attach(part)
-
-        # Connect to SMTP server
-        server = smtplib.SMTP(smtp_host, smtp_port, timeout=15)
-        server.ehlo()
-        server.starttls()
-        server.ehlo()
-        server.login(sender_email, sender_password)
-        server.sendmail(sender_email, [to_email], msg.as_string())
-        server.quit()
-
-        return {
-            "status": "success",
-            "message": f"E-mail de candidatura enviado com sucesso para {to_email} com {len(attachment_paths)} anexo(s)!"
-        }
-
-    except smtplib.SMTPAuthenticationError as e:
-        err_str = str(e)
-        if "535" in err_str and ("outlook" in smtp_host or "office365" in smtp_host or "live.com" in smtp_host):
-            msg = (
-                "A Microsoft encerrou o suporte a autenticação básica/senhas de aplicativo para SMTP em contas pessoais (@hotmail/@outlook) em 16/09/2024. "
-                "Para enviar com 1 clique, use o botão 'Abrir no Outlook Web' ou configure um e-mail Gmail no .env com senha de aplicativo Google."
-            )
-        else:
-            msg = f"Falha de autenticação SMTP ({err_str}). Verifique usuário e senha no .env."
-        return {
-            "status": "error",
-            "message": msg
-        }
-    except Exception as e:
-        return {
-            "status": "error",
-            "message": f"Erro no envio SMTP: {e}"
-        }
-
 if __name__ == "__main__":
     prof = load_profile()
     draft = generate_email_application(
@@ -324,4 +228,5 @@ if __name__ == "__main__":
     print("Email Subject:", draft["subject"])
     print("Attachments:", draft["attachments"])
     print("To:", draft["to"])
-    print("Sample Body:\n", draft["body_text"][:300] + "...")
+    print("Outlook Web Link:", draft["outlook_web_url"][:80] + "...")
+    print("Gmail Link:", draft["gmail_web_url"][:80] + "...")
