@@ -1,6 +1,6 @@
 {
   "name": "Lucas Andrade da Silva",
-  "headline": "Desenvolvedor de Software | Java • Python • Flutter • SQL | Engenharia de Software com IA",
+  "headline": "Back-End Software Engineer | Java • Spring Boot • Python • SQL (RESTful APIs & Clean Architecture)",
   "contact": {
     "email": "lucas.exemplo@email.com",
     "phone": "+55 11 98765-4321",
@@ -9,91 +9,88 @@
     "github": "https://github.com/exemplo-dev",
     "portfolio": "https://github.com/exemplo-dev"
   },
-  "summary": "Desenvolvedor de Software focado em backend, mobile e desenvolvimento de sistemas orientados a APIs RESTful. Praticante de engenharia de software assistida por IA para acelerar entregas com rigor técnico e cobertura de testes. Experiência na condução de PoCs, prototipagem ágil e benchmarking de métricas. Sólida fundamentação em Java (Spring Boot), Python, Flutter, modelagem SQL e NoSQL.",
+  "summary": "Desenvolvedor Back-End focado na construção de APIs RESTful de alta performance, modelagem relacional e arquitetura limpa. Sólida fundamentação em Java (Spring Boot), Python, SQL e NoSQL, com rigor em controle de versão colaborativo (Git/GitHub), cobertura de testes e profiling de consultas. Utiliza engenharia de software assistida por IA para acelerar a validação de hipóteses, prototipagem de Provas de Conceito (PoCs) e benchmarks de desempenho. Experiência prática em automação via scripts e resolução de falhas operacionais. Inglês avançado.",
   "target_roles": [
+    "Junior Back-End Developer",
+    "Junior Java Developer",
+    "Junior Python Developer",
     "Junior Software Engineer",
-    "Junior Backend Developer",
+    "Desenvolvedor Back-End Junior",
     "Desenvolvedor Java Junior",
     "Desenvolvedor Python Junior",
-    "Desenvolvedor Flutter Junior",
-    "Analista de Sistemas Junior",
-    "Estagiário de Desenvolvimento de Software",
-    "Estagiário de TI"
+    "Desenvolvedor de Software Junior"
   ],
   "skills": {
-    "languages": [
-      "Java",
-      "Python",
+    "backend_and_languages": [
+      "Java (Spring Boot, Hibernate)",
+      "Python (FastAPI)",
+      "SQL",
+      "Layered Clean Architecture",
+      "RESTful API Design & Consumption",
+      "JSON Payloads & Error Handling",
       "Dart",
-      "JavaScript",
-      "TypeScript",
-      "SQL"
-    ],
-    "frameworks": [
-      "Spring Boot",
       "Flutter",
-      "FastAPI",
-      "React",
-      "Node.js"
+      "JavaScript",
+      "PHP"
     ],
-    "databases": [
+    "databases_and_optimization": [
       "PostgreSQL",
       "MySQL",
-      "MongoDB",
-      "Firebase Firestore",
-      "SQLite",
-      "Redis"
+      "Relational Query Optimization & Indexing",
+      "Entity-Relationship (E-R) Modeling",
+      "NoSQL (MongoDB, Firebase Firestore, Redis)"
     ],
-    "tools": [
+    "version_control_and_devops": [
       "Git & GitHub Version Control",
-      "GitHub Actions",
+      "Branching Strategies & Pull Requests",
+      "Code Reviews & Git Worktrees",
       "Docker",
-      "Linux",
-      "Postman",
-      "RESTful API Consumption & Design",
-      "PowerShell"
+      "Automated Testing (Unit & Integration)",
+      "Performance Profiling & Metrics Collection"
     ],
-    "concepts": [
-      "Object-Oriented Programming (OOP)",
-      "Clean Architecture",
-      "RESTful Architecture & API Consumption",
-      "Proof of Concept (PoC) Execution",
-      "Performance Benchmarking & Metrics Collection",
-      "Standard Operating Procedures (SOPs)",
-      "Automated Testing",
-      "AI-Assisted Software Engineering",
-      "CI/CD"
+    "ai_assisted_engineering": [
+      "AI-Assisted Engineering Workflows",
+      "Standardized Memory Protocols",
+      "Automated Code Validation",
+      "Rapid Prototyping & PoCs",
+      "LLM Evaluation & Benchmarking"
+    ],
+    "systems_and_technical_operations": [
+      "Scripting & Automation (Python, Bash, PowerShell)",
+      "Standard Operating Procedures (POPs/SOPs)",
+      "Application Log Diagnostics in Linux",
+      "L1/L2 Technical Support"
     ]
   },
   "projects": [
     {
       "name": "Plataforma de E-Commerce & Controle de Estoque",
-      "tech_stack": ["Java", "Spring Boot", "React", "PostgreSQL", "REST API", "PoC"],
-      "description": "Sistema full-stack com catálogo de produtos, conciliação em tempo real de pedidos e documentação interativa Swagger. Executou PoC de integração e otimizou queries SQL com indexação e medição de latência.",
+      "tech_stack": ["Java", "Spring Boot", "React", "PostgreSQL", "REST API"],
+      "description": "Projetou API RESTful para catálogo de produtos e controle de pedidos com documentação Swagger. Otimizou queries SQL com indexação, reduzindo o tempo de resposta em 40% com 100% de cobertura nos testes unitários das regras de negócio.",
       "url": "https://github.com/exemplo-dev/ecommerce-backend"
     },
     {
       "name": "App Mobile de Gestão de Rotinas e Saúde",
       "tech_stack": ["Flutter", "Dart", "Firebase NoSQL", "REST API"],
-      "description": "Aplicativo multiplataforma com persistência NoSQL (Firestore), sincronização em tempo real e gerência de estado reativa com Clean Architecture.",
+      "description": "Aplicativo multiplataforma com persistência NoSQL (Firestore), sincronização assíncrona e caching local, reduzindo tráfego de rede em 55%.",
       "url": "https://github.com/exemplo-dev/health-tracker"
     },
     {
       "name": "JobHunter AI — Engine Autônomo de Vagas & Benchmarking",
-      "tech_stack": ["Python", "Playwright", "APIs REST", "Benchmarking"],
+      "tech_stack": ["Python", "Playwright", "APIs REST", "PoC"],
       "description": "Automação em Python para monitorar feeds e APIs de vagas, calculando compatibilidade algorítmica e coletando métricas de taxa de acerto em formulários.",
       "url": "https://github.com/exemplo-dev/job-hunter-ai"
     }
   ],
   "experience": [
     {
-      "role": "Estagiário de Desenvolvimento de Software & Suporte Técnico",
+      "role": "Estagiário em Sistemas & Automação de TI",
       "company": "TechCorp Soluções Tecnológicas",
       "period": "01/2025 – Presente",
       "highlights": [
-        "Suporte a sistemas ERP e servidores Linux, criando scripts em Python para automação de rotinas.",
+        "Desenvolveu scripts em Python para automação de rotinas de carga de dados e conciliação de tabelas, reduzindo tarefas manuais em 65%.",
         "Elaborou Procedimentos Operacionais Padrão (POPs) documentados para contingência de servidores e incidentes.",
-        "Coletou métricas de diagnóstico e performance de infraestrutura."
+        "Atuou no suporte a sistemas ERP, análise de logs de aplicação em Linux e otimização de consultas SQL."
       ]
     },
     {
@@ -101,7 +98,7 @@
       "company": "Varejo Express Logística",
       "period": "06/2024 – 12/2024",
       "highlights": [
-        "Apoio na manutenção preventiva e suporte N1 a terminais PDV, periféricos e redes locais."
+        "Apoio na manutenção preventiva e suporte N1 a terminais PDV, periféricos e redes locais sob rígidos SLAs operacionais."
       ]
     }
   ],
