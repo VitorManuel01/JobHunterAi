@@ -1,0 +1,114 @@
+{
+  "name": "Lucas Andrade da Silva",
+  "headline": "Desenvolvedor de Software | Java • Python • Flutter • SQL | Engenharia de Software com IA",
+  "contact": {
+    "email": "lucas.exemplo@email.com",
+    "phone": "+55 11 98765-4321",
+    "location": "São Paulo, SP, Brazil",
+    "linkedin": "https://linkedin.com/in/exemplo-dev",
+    "github": "https://github.com/exemplo-dev",
+    "portfolio": "https://github.com/exemplo-dev"
+  },
+  "summary": "Desenvolvedor de Software focado em backend, mobile e desenvolvimento de sistemas orientados a APIs RESTful. Praticante de engenharia de software assistida por IA para acelerar entregas com rigor técnico e cobertura de testes. Sólida fundamentação em Java (Spring Boot), Python, Flutter e modelagem SQL.",
+  "target_roles": [
+    "Junior Software Engineer",
+    "Junior Backend Developer",
+    "Desenvolvedor Java Junior",
+    "Desenvolvedor Python Junior",
+    "Desenvolvedor Flutter Junior",
+    "Analista de Sistemas Junior",
+    "Estagiário de Desenvolvimento de Software",
+    "Estagiário de TI"
+  ],
+  "skills": {
+    "languages": [
+      "Java",
+      "Python",
+      "Dart",
+      "JavaScript",
+      "TypeScript",
+      "SQL"
+    ],
+    "frameworks": [
+      "Spring Boot",
+      "Flutter",
+      "FastAPI",
+      "React",
+      "Node.js"
+    ],
+    "databases": [
+      "PostgreSQL",
+      "MySQL",
+      "SQLite",
+      "Redis"
+    ],
+    "tools": [
+      "Git",
+      "GitHub Actions",
+      "Docker",
+      "Linux",
+      "Postman",
+      "RESTful APIs",
+      "PowerShell"
+    ],
+    "concepts": [
+      "Object-Oriented Programming (OOP)",
+      "Clean Architecture",
+      "RESTful Architecture",
+      "Automated Testing",
+      "AI-Assisted Software Engineering",
+      "CI/CD"
+    ]
+  },
+  "portfolio_projects": [
+    {
+      "name": "E-Commerce Retail API",
+      "description": "API RESTful de alta performance para catálogo de produtos, controle de pedidos e conciliação em tempo real de estoque.",
+      "tech_stack": ["Java", "Spring Boot", "React", "PostgreSQL"],
+      "highlights": "Implementou autenticação JWT, paginação de consultas e documentação OpenAPI com cobertura de testes unitários.",
+      "url": "https://github.com/exemplo-dev/ecommerce-backend"
+    },
+    {
+      "name": "HealthTracker Mobile",
+      "description": "Aplicativo mobile multiplataforma para acompanhamento de rotinas de saúde e gestão de medicamentos com alertas programados.",
+      "tech_stack": ["Flutter", "Dart", "SQLite", "Clean Architecture"],
+      "highlights": "Arquitetura limpa em camadas (Data, Domain, Presentation) com persistência local e interface reativa.",
+      "url": "https://github.com/exemplo-dev/health-tracker"
+    },
+    {
+      "name": "JobHunter AI",
+      "description": "Motor autônomo em Python para rastreamento de vagas remotas, cálculo de compatibilidade e autofill de formulários ATS.",
+      "tech_stack": ["Python", "Playwright", "REST APIs"],
+      "highlights": "Varredura contínua de APIs públicas de vagas e preenchimento supervisionado de formulários com navegador headless/visual.",
+      "url": "https://github.com/exemplo-dev/job-hunter-ai"
+    }
+  ],
+  "education": [
+    {
+      "degree": "Tecnólogo em Análise e Desenvolvimento de Sistemas",
+      "institution": "Faculdade de Tecnologia",
+      "period": "2024 - 2026 (Em andamento)"
+    }
+  ],
+  "experience": [
+    {
+      "company": "TechCorp Soluções Tecnológicas",
+      "role": "Estagiário de Desenvolvimento de Software & Suporte",
+      "period": "01/2025 - Presente",
+      "bullets": [
+        "Suporte a sistemas de gestão empresarial (ERP), diagnóstico de logs e consultas SQL.",
+        "Desenvolvimento de scripts de automação em Python para cargas e relatórios operacionais."
+      ]
+    }
+  ],
+  "salary_expectation": {
+    "brl_clt_monthly": 3500,
+    "brl_pj_monthly": 4500,
+    "usd_hourly": 25,
+    "usd_monthly_contract": 3500
+  },
+  "languages": [
+    { "language": "Português", "level": "Nativo" },
+    { "language": "Inglês", "level": "Avançado / Fluente" }
+  ]
+}

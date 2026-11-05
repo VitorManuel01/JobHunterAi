@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Hunter AI — Dashboard de Vagas Internacionais</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 flex flex-col h-screen overflow-hidden">
+
+  <!-- Top Navigation Bar -->
+  <header class="bg-slate-900 border-b border-slate-800 px-6 py-3.5 flex items-center justify-between shrink-0 shadow-md">
+    <div class="flex items-center space-x-3">
+      <div class="bg-gradient-to-tr from-blue-600 to-indigo-500 w-9 h-9 rounded-xl flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/20">
+        JH
+      </div>
+      <div>
+        <h1 class="text-base font-bold text-white tracking-tight flex items-center gap-2">
+          Job Hunter AI
+          <span id="profile-name-badge" class="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
+            AI Edition
+          </span>
+        </h1>
+        <p class="text-xs text-slate-400">Motor de Descoberta & Automação de Vagas Remotas em Dólar</p>
+      </div>
+    </div>
+
+    <!-- Quick Stats & Actions -->
+    <div class="flex items-center space-x-4">
+      <div class="hidden md:flex items-center space-x-4 text-xs text-slate-400 bg-slate-950/60 px-3.5 py-1.5 rounded-lg border border-slate-800">
+        <div>Total Vagas: <strong id="stat-total" class="text-slate-200">0</strong></div>
+        <div class="w-px h-3 bg-slate-700"></div>
+        <div>Matches: <strong id="stat-matches" class="text-blue-400">0</strong></div>
+      </div>
+      <button id="btn-refresh" onclick="refreshJobs()" class="flex items-center gap-2 text-xs font-medium px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition border border-slate-700 active:scale-95">
+        <svg id="refresh-icon" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+        <span>Atualizar Vagas</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Split Layout -->
+  <main class="flex flex-1 overflow-hidden">
+    
+    <!-- Left Sidebar: Filter & Job List -->
+    <aside class="w-full md:w-[420px] lg:w-[460px] bg-slate-900/60 border-r border-slate-800 flex flex-col shrink-0">
+      
+      <!-- Filter Bar -->
+      <div class="p-3.5 border-b border-slate-800 space-y-3 bg-slate-900/90">
+        <!-- Search Input -->
+        <div class="relative">
+          <input type="text" id="search-input" oninput="debounceSearch()" placeholder="Buscar por cargo, empresa, tech..." class="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-4 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+          <svg class="w-4 h-4 text-slate-500 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        </div>
+
+        <!-- Tag Filters -->
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
+          <button onclick="setFilter('')" class="tag-btn px-2.5 py-1 rounded-md bg-blue-600 text-white font-medium" data-tag="">Todas</button>
+          <button onclick="setFilter('brasil')" class="tag-btn px-2.5 py-1 rounded-md bg-emerald-950/60 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-900/50" data-tag="brasil">🇧🇷 Brasil</button>
+          <button onclick="setFilter('email')" class="tag-btn px-2.5 py-1 rounded-md bg-amber-950/60 text-amber-300 border border-amber-500/30 hover:bg-amber-900/50" data-tag="email">✉️ Por E-mail</button>
+          <button onclick="setFilter('ai')" class="tag-btn px-2.5 py-1 rounded-md bg-purple-950/60 text-purple-300 border border-purple-500/30 hover:bg-purple-900/50" data-tag="ai">🤖 AI / Vibe</button>
+          <button onclick="setFilter('junior')" class="tag-btn px-2.5 py-1 rounded-md bg-teal-950/60 text-teal-300 border border-teal-500/30 hover:bg-teal-900/50" data-tag="junior">🌱 Junior</button>
+          <button onclick="setFilter('europe')" class="tag-btn px-2.5 py-1 rounded-md bg-sky-950/60 text-sky-300 border border-sky-500/30 hover:bg-sky-900/50" data-tag="europe">🇪🇺 Europa</button>
+          <button onclick="setFilter('asia')" class="tag-btn px-2.5 py-1 rounded-md bg-rose-950/60 text-rose-300 border border-rose-500/30 hover:bg-rose-900/50" data-tag="asia">🌏 Ásia/APAC</button>
+          <button onclick="setFilter('latam')" class="tag-btn px-2.5 py-1 rounded-md bg-slate-800 text-slate-300 hover:bg-slate-700" data-tag="latam">🌎 LatAm</button>
+          <button onclick="setFilter('java')" class="tag-btn px-2.5 py-1 rounded-md bg-slate-800 text-slate-300 hover:bg-slate-700" data-tag="java">Java</button>
+          <button onclick="setFilter('flutter')" class="tag-btn px-2.5 py-1 rounded-md bg-slate-800 text-slate-300 hover:bg-slate-700" data-tag="flutter">Flutter</button>
+          <button onclick="setFilter('python')" class="tag-btn px-2.5 py-1 rounded-md bg-slate-800 text-slate-300 hover:bg-slate-700" data-tag="python">Python</button>
+        </div>
+      </div>
+
+      <!-- Job List Scrollable -->
+      <div id="job-list" class="flex-1 overflow-y-auto divide-y divide-slate-800/60 p-2 space-y-1">
+        <div class="text-center py-12 text-slate-500 text-xs">Carregando oportunidades...</div>
+      </div>
+    </aside>
+
+    <!-- Right Content Area: Job Detail & Actions -->
+    <section id="job-detail" class="flex-1 flex flex-col bg-slate-950 overflow-y-auto">
+      <div class="flex-1 flex items-center justify-center text-slate-500 text-sm p-8 text-center">
+        Selecione uma vaga na lista ao lado para ver os detalhes, gerar a Cover Letter e preencher com Playwright.
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Toast Notification Container -->
+  <div id="toast" class="fixed bottom-6 right-6 bg-blue-600 text-white text-xs font-medium px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 transform translate-y-20 opacity-0 transition-all duration-300 z-50">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+    <span id="toast-message">Notificação</span>
+  </div>
+
+  <!-- Email Application Modal -->
+  <div id="email-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+      <!-- Modal Header -->
+      <div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-800/40">
+        <div class="flex items-center gap-2 text-sm font-bold text-white">
+          <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+          <span>Disparo de Candidatura por E-mail</span>
+        </div>
+        <button onclick="closeEmailModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+
+      <!-- Modal Body Form -->
+      <div class="p-6 overflow-y-auto space-y-4 text-xs">
+        <div>
+          <label class="block text-slate-400 font-medium mb-1">Para (Destinatário):</label>
+          <input type="text" id="modal-email-to" readonly class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-slate-200 font-mono">
+        </div>
+        <div>
+          <label class="block text-slate-400 font-medium mb-1">Assunto:</label>
+          <input type="text" id="modal-email-subject" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-slate-200 font-medium focus:border-amber-500 focus:outline-none">
+        </div>
+        <div>
+          <label class="block text-slate-400 font-medium mb-1">Anexo Automático:</label>
+          <div class="flex items-center gap-2 text-[11px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-lg w-fit">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg>
+            <span id="modal-attachment-name">resume.pdf (Currículo Internacional ATS)</span>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="block text-slate-400 font-medium">Corpo do E-mail:</label>
+            <button type="button" onclick="copyModalBody()" class="text-[11px] text-amber-400 hover:text-amber-300 flex items-center gap-1 font-medium bg-amber-500/10 hover:bg-amber-500/20 px-2 py-0.5 rounded border border-amber-500/20 transition">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+              <span>Copiar Texto Limpo</span>
+            </button>
+          </div>
+          <textarea id="modal-email-body" oninput="updateModalLinks()" rows="11" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-slate-300 font-mono text-[11px] leading-relaxed focus:border-amber-500 focus:outline-none resize-none"></textarea>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 py-4 border-t border-slate-800 bg-slate-800/40 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-2">
+          <a id="modal-btn-outlook" href="#" target="_blank" class="px-3.5 py-2 bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-500/30 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 shadow-sm">
+            <svg class="w-4 h-4 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            <span>Abrir no Outlook / Hotmail</span>
+          </a>
+          <a id="modal-btn-gmail" href="#" target="_blank" class="px-3 py-2 bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 shadow-sm">
+            <span>Gmail Web</span>
+          </a>
+          <a id="modal-btn-mailto" href="#" target="_blank" class="px-2.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-400 rounded-lg text-xs font-medium border border-slate-700 transition" title="Cliente Padrão do Windows">
+            <span>App Mail</span>
+          </a>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="closeEmailModal()" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-400 rounded-lg text-xs font-medium transition">
+            Fechar
+          </button>
+          <button id="modal-btn-send" onclick="sendModalEmail()" class="px-4 py-2 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white rounded-lg text-xs font-bold shadow-lg shadow-amber-500/20 transition active:scale-95 flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+            <span>Disparo SMTP Direto</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentJobs = [];
+    let selectedJobId = null;
+    let currentFilter = '';
+    let searchTimeout = null;
+
+    async function loadJobs() {
+      const q = document.getElementById('search-input').value;
+      const res = await fetch(`/api/jobs?tag=${encodeURIComponent(currentFilter)}&q=${encodeURIComponent(q)}&min_score=15`);
+      const data = await res.json();
+      currentJobs = data.jobs || [];
+      document.getElementById('stat-total').innerText = data.total_scanned;
+      document.getElementById('stat-matches').innerText = data.total_matches;
+      renderJobList();
+      
+      if (currentJobs.length > 0 && !selectedJobId) {
+        selectJob(currentJobs[0].job_id);
+      }
+    }
+
+    function renderJobList() {
+      const container = document.getElementById('job-list');
+      if (currentJobs.length === 0) {
+        container.innerHTML = '<div class="text-center py-12 text-slate-500 text-xs">Nenhuma vaga encontrada com esse filtro.</div>';
+        return;
+      }
+
+      container.innerHTML = currentJobs.map(j => {
+        const isSelected = j.job_id === selectedJobId;
+        const scoreColor = j.score >= 70 ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 
+                          j.score >= 40 ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' : 
+                                         'bg-slate-800 text-slate-400 border-slate-700';
+
+        const categoryBadge = j.category === 'AI / VIBE CODING' 
+          ? '<span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">🤖 Vibe / AI</span>'
+          : j.is_explicit_junior 
+          ? '<span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">🌱 Junior</span>'
+          : `<span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-slate-800 text-slate-400">${escapeHtml(j.category)}</span>`;
+
+        return `
+          <div onclick="selectJob('${j.job_id}')" class="p-3.5 rounded-xl cursor-pointer transition border ${isSelected ? 'bg-slate-800/90 border-blue-500/60 shadow-lg' : 'bg-slate-900/40 border-slate-800/80 hover:bg-slate-800/50 hover:border-slate-700'}">
+            <div class="flex items-start justify-between gap-2 mb-1.5">
+              <h3 class="font-semibold text-xs text-slate-100 leading-snug line-clamp-1">${escapeHtml(j.title)}</h3>
+              <span class="shrink-0 text-[11px] font-bold px-2 py-0.5 rounded-md border ${scoreColor}">
+                ${j.score}%
+              </span>
+            </div>
+            
+            <div class="flex items-center gap-2 text-[11px] text-slate-400 mb-2">
+              <span class="font-medium text-slate-300">${escapeHtml(j.company)}</span>
+              <span>&bull;</span>
+              <span class="truncate max-w-[140px]">${escapeHtml(j.location || 'Remote')}</span>
+            </div>
+
+            <div class="flex items-center justify-between text-[10px] text-slate-500">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="bg-slate-800 px-2 py-0.5 rounded text-slate-400 font-mono">${escapeHtml(j.source)}</span>
+                ${j.is_brazilian ? '<span class="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">🇧🇷 Brasil</span>' : ''}
+                ${categoryBadge}
+                ${j.apply_email || j.accepts_email ? '<span class="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">✉️ Email</span>' : ''}
+              </div>
+              <span class="text-blue-400/90 font-medium shrink-0">🎯 ${escapeHtml(j.recommended_project ? j.recommended_project.name : '')}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function selectJob(jobId) {
+      selectedJobId = jobId;
+      renderJobList();
+
+      const detailContainer = document.getElementById('job-detail');
+      detailContainer.innerHTML = '<div class="flex-1 flex items-center justify-center text-slate-500 text-sm">Carregando detalhes e gerando Kit de Aplicação...</div>';
+
+      try {
+        const res = await fetch(`/api/jobs/${jobId}`);
+        const data = await res.json();
+        const raw = data.raw;
+        const match = data.match;
+        const cl = data.cover_letter;
+        const ats = data.ats_answers;
+
+        detailContainer.innerHTML = `
+          <!-- Header Area -->
+          <div class="p-6 border-b border-slate-800 bg-slate-900/40">
+            <div class="flex items-start justify-between gap-4 mb-3">
+              <div>
+                <span class="text-[11px] font-semibold text-blue-400 uppercase tracking-wider">${escapeHtml(raw.source)} &bull; ${escapeHtml(raw.location || 'Remote')}</span>
+                <h2 class="text-xl font-bold text-white mt-0.5">${escapeHtml(raw.title)}</h2>
+                <div class="text-sm text-slate-300 font-medium">${escapeHtml(raw.company)}</div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="flex items-center gap-2">
+                ${raw.apply_email ? `
+                  <button onclick="openEmailModal('${jobId}')" class="flex items-center gap-2 px-3.5 py-2 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white text-xs font-semibold rounded-lg shadow-lg shadow-amber-500/20 transition active:scale-95">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    <span>Aplicar por E-mail</span>
+                  </button>
+                ` : ''}
+                <button onclick="autofillJob('${jobId}')" class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-semibold rounded-lg shadow-lg shadow-blue-500/25 transition active:scale-95">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                  <span>Preencher no Navegador (Playwright)</span>
+                </button>
+                <a href="${raw.url}" target="_blank" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium rounded-lg border border-slate-700 transition">
+                  Abrir Link
+                </a>
+              </div>
+            </div>
+
+            <!-- Pitch Banner -->
+            <div class="bg-blue-500/10 border border-blue-500/20 rounded-xl p-3 flex items-center justify-between text-xs">
+              <div>
+                <span class="text-slate-400">Projeto Recomendado para Abordagem:</span>
+                <strong class="text-blue-300 ml-1">${escapeHtml(match.recommended_project.name)}</strong>
+                <span class="text-slate-400 text-[11px] ml-1">(${escapeHtml(match.recommended_project.tech_stack.join(', '))})</span>
+              </div>
+              <span class="font-bold text-blue-400">${match.score}% Compatibilidade</span>
+            </div>
+          </div>
+
+          <!-- Tabs Content -->
+          <div class="p-6 space-y-6">
+            <!-- Cover Letter Section -->
+            <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+              <div class="px-4 py-3 bg-slate-800/60 border-b border-slate-800 flex items-center justify-between">
+                <div class="text-xs font-semibold text-slate-200 flex items-center gap-2">
+                  <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                  Cover Letter Gerada (Pronta para Envio)
+                </div>
+                <button onclick="copyToClipboard(\`${escapeForTemplate(cl)}\`, 'Cover letter copiada!')" class="text-[11px] px-2.5 py-1 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded font-medium transition">
+                  Copiar Texto
+                </button>
+              </div>
+              <pre class="p-4 text-xs font-mono text-slate-300 whitespace-pre-wrap leading-relaxed select-all bg-slate-950/40">${escapeHtml(cl)}</pre>
+            </div>
+
+            <!-- Pre-filled ATS Answers -->
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-3">
+              <h4 class="text-xs font-semibold text-slate-200 uppercase tracking-wider">Respostas Rápidas para Formulários ATS</h4>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div class="bg-slate-950/60 p-3 rounded-lg border border-slate-800/80">
+                  <span class="text-slate-500 font-medium">Pretensão Salarial (USD):</span>
+                  <div class="text-slate-200 mt-1">${escapeHtml(ats.salary_expectations)}</div>
+                </div>
+                <div class="bg-slate-950/60 p-3 rounded-lg border border-slate-800/80">
+                  <span class="text-slate-500 font-medium">Disponibilidade & Contrato:</span>
+                  <div class="text-slate-200 mt-1">${escapeHtml(ats.work_authorization)}</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Raw Description -->
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-2">
+              <h4 class="text-xs font-semibold text-slate-200 uppercase tracking-wider">Descrição Completa da Oportunidade</h4>
+              <div class="text-xs text-slate-400 leading-relaxed font-sans whitespace-pre-line max-h-96 overflow-y-auto pr-2">
+                ${escapeHtml(raw.description)}
+              </div>
+            </div>
+          </div>
+        `;
+      } catch (e) {
+        detailContainer.innerHTML = `<div class="p-8 text-rose-400 text-xs">Erro ao carregar vaga: ${e.message}</div>`;
+      }
+    }
+
+    async function autofillJob(jobId) {
+      showToast("Iniciando Playwright... O navegador vai abrir na sua tela!");
+      try {
+        const res = await fetch(`/api/jobs/${jobId}/autofill`, { method: 'POST' });
+        const data = await res.json();
+        showToast(data.message || "Formulário aberto no navegador!");
+      } catch (e) {
+        showToast("Erro ao abrir navegador: " + e.message);
+      }
+    }
+
+    async function refreshJobs() {
+      const btn = document.getElementById('btn-refresh');
+      const icon = document.getElementById('refresh-icon');
+      btn.disabled = true;
+      icon.classList.add('animate-spin');
+      showToast("Buscando novas vagas em tempo real nas APIs...");
+
+      try {
+        const res = await fetch('/api/jobs/refresh', { method: 'POST' });
+        const data = await res.json();
+        showToast(`Atualizado! ${data.total_scanned} vagas escaneadas.`);
+        await loadJobs();
+      } catch (e) {
+        showToast("Erro ao atualizar vagas: " + e.message);
+      } finally {
+        btn.disabled = false;
+        icon.classList.remove('animate-spin');
+      }
+    }
+
+    function setFilter(tag) {
+      currentFilter = tag;
+      document.querySelectorAll('.tag-btn').forEach(btn => {
+        if (btn.getAttribute('data-tag') === tag) {
+          btn.className = "tag-btn px-2.5 py-1 rounded-md bg-blue-600 text-white font-medium";
+        } else {
+          btn.className = "tag-btn px-2.5 py-1 rounded-md bg-slate-800 text-slate-300 hover:bg-slate-700";
+        }
+      });
+      loadJobs();
+    }
+
+    function debounceSearch() {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(loadJobs, 250);
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-message').innerText = message;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 4000);
+    }
+
+    function copyToClipboard(text, msg) {
+      navigator.clipboard.writeText(text);
+      showToast(msg || "Copiado com sucesso!");
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function escapeForTemplate(str) {
+      if (!str) return '';
+      return str.replace(/\\/g, '\\\\').replace(/`/g, '\\`').replace(/\$/g, '\\$');
+    }
+
+    let activeEmailJobId = null;
+
+    async function openEmailModal(jobId) {
+      activeEmailJobId = jobId;
+      showToast("Carregando rascunho de e-mail...");
+      try {
+        const res = await fetch(`/api/jobs/${jobId}/email`);
+        const data = await res.json();
+
+        document.getElementById('modal-email-to').value = data.to || '';
+        document.getElementById('modal-email-subject').value = data.subject || '';
+        document.getElementById('modal-email-body').value = data.body_text || '';
+        if (data.attachment_name) {
+          document.getElementById('modal-attachment-name').innerText = data.attachment_name;
+        }
+        
+        updateModalLinks();
+
+        const modal = document.getElementById('email-modal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      } catch (e) {
+        showToast("Erro ao gerar rascunho: " + e.message);
+      }
+    }
+
+    function updateModalLinks() {
+      const to = document.getElementById('modal-email-to').value.trim();
+      const subject = document.getElementById('modal-email-subject').value;
+      const body = document.getElementById('modal-email-body').value;
+
+      const encSub = encodeURIComponent(subject);
+      const encBody = encodeURIComponent(body);
+
+      document.getElementById('modal-btn-mailto').href = `mailto:${to}?subject=${encSub}&body=${encBody}`;
+      document.getElementById('modal-btn-outlook').href = `https://outlook.live.com/mail/deeplink/compose?to=${encodeURIComponent(to)}&subject=${encSub}&body=${encBody}`;
+      document.getElementById('modal-btn-gmail').href = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${encSub}&body=${encBody}`;
+    }
+
+    function copyModalBody() {
+      const body = document.getElementById('modal-email-body').value;
+      navigator.clipboard.writeText(body);
+      showToast("Texto limpo copiado para a área de transferência!");
+    }
+
+    function closeEmailModal() {
+      const modal = document.getElementById('email-modal');
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+    }
+
+    async function sendModalEmail() {
+      if (!activeEmailJobId) return;
+      const btn = document.getElementById('modal-btn-send');
+      btn.disabled = true;
+      btn.innerText = "Enviando...";
+
+      try {
+        const res = await fetch(`/api/jobs/${activeEmailJobId}/email/send`, { method: 'POST' });
+        const data = await res.json();
+        if (data.status === 'success') {
+          showToast("🎉 " + data.message);
+          closeEmailModal();
+        } else if (data.status === 'needs_config') {
+          showToast("⚠️ " + data.message);
+        } else {
+          showToast("❌ " + (data.message || "Erro no envio"));
+        }
+      } catch (e) {
+        showToast("Erro ao conectar com servidor SMTP: " + e.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg><span>Enviar Agora via SMTP</span>`;
+      }
+    }
+
+    // Initial load
+    fetch('/api/profile').then(r => r.json()).then(p => {
+      if (p && p.name) {
+        const badge = document.getElementById('profile-name-badge');
+        if (badge) badge.innerText = p.name;
+      }
+    }).catch(() => {});
+    loadJobs();
+  </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+# ==============================================================
+# JobHunter AI — .gitignore (Segurança & Privacidade)
+# ==============================================================
+
+# Credenciais e Senhas (CRÍTICO)
+.env
+*.env
+*.pem
+*.key
+
+# Dados Pessoais e Currículos Reais (Privado)
+profile.json
+curriculo.pdf
+curriculo_ats.html
+resume.pdf
+resume_ats.html
+cover_letter.pdf
+cover_letter.txt
+linkedin_optimizer.html
+
+# Diretórios de Aplicação e Caches Gerados
+applications/
+cache/
+scratch/
+MATCHING_JOBS_REPORT.md
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+dist/
+*.egg-info/
+
+# Ambientes & Editores
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
